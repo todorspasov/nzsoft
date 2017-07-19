@@ -1,4 +1,4 @@
-package com.nzsoft;
+package com.nzsoft.tasks;
 
 /**
  * Contains Google Drive Operations related to tasks (files). A task represents

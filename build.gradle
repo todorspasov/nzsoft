@@ -2,10 +2,20 @@ apply plugin: 'java'
 apply plugin: 'application'
 apply plugin: 'eclipse-wtp'
 
-mainClassName = 'com.nzsoft.drive.DriveHelper'
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 version = '1.0'
+
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'RPi Minion',
+                'Implementation-Version': version,
+                'Main-Class': 'com.nzsoft.Launcher'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
 
 repositories {
     mavenCentral()
@@ -15,6 +25,5 @@ dependencies {
     compile 'com.google.api-client:google-api-client:1.22.0'
     compile 'com.google.oauth-client:google-oauth-client-jetty:1.22.0'
     compile 'com.google.apis:google-api-services-drive:v3-rev76-1.22.0'
-    
-    
+    compile 'com.pi4j:pi4j-core:1.1'
 }
