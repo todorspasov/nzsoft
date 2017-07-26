@@ -5,8 +5,10 @@ import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 
 public class RPIOperationsImpl implements RPIOperations {
 
-    private static final Pin BUTTON_INPUT_PIN = RaspiPin.GPIO_26;
-    private static final Pin LED_OUTPUT_PIN = RaspiPin.GPIO_18;
+    // For pin numbering (RPi 3, Model B), see:
+    // http://pi4j.com/pins/model-3b-rev1.html
+    private static final Pin LED_OUTPUT_PIN = RaspiPin.GPIO_01;
+    private static final Pin BUTTON_INPUT_PIN = RaspiPin.GPIO_25;
 
     private final GpioController gpio;
     private final GpioPinDigitalInput button;
@@ -15,7 +17,7 @@ public class RPIOperationsImpl implements RPIOperations {
     public RPIOperationsImpl() {
         gpio = GpioFactory.getInstance();
         button = gpio.provisionDigitalInputPin(BUTTON_INPUT_PIN, PinPullResistance.PULL_DOWN);
-        led = gpio.provisionDigitalOutputPin(LED_OUTPUT_PIN, "MinionLED", PinState.HIGH);
+        led = gpio.provisionDigitalOutputPin(LED_OUTPUT_PIN, "MinionLED", PinState.LOW);
         led.setShutdownOptions(true, PinState.LOW);
     }
 
