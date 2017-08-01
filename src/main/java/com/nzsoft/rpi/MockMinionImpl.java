@@ -1,6 +1,6 @@
 package com.nzsoft.rpi;
 
-public final class DummyMinionImpl implements Minion {
+public final class MockMinionImpl implements Minion {
 
     @Override
     public void changeLED(LEDState state) {

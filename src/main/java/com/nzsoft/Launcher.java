@@ -1,12 +1,9 @@
 package com.nzsoft;
 
-import com.nzsoft.rpi.DummyMinionImpl;
+import com.nzsoft.rpi.MockMinionImpl;
 import com.nzsoft.rpi.Minion;
 import com.nzsoft.tasks.MockTaskOperationsImpl;
 import com.nzsoft.tasks.TaskOperations;
-import com.pi4j.io.gpio.PinState;
-import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
-import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 
 import static com.nzsoft.rpi.Minion.LEDState.OFF;
 import static com.nzsoft.rpi.Minion.LEDState.ON;
@@ -16,7 +13,7 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
 public final class Launcher {
 
     public static void main(String[] args) throws Exception {
-        Minion minion = new DummyMinionImpl();
+        Minion minion = new MockMinionImpl();
         TaskOperations taskOperations = new MockTaskOperationsImpl();
 
         while (true) {
@@ -41,21 +38,6 @@ public final class Launcher {
                 System.out.println("No tasks available. Sleeping for 1sec");
                 sleep(1000);
             }
-        }
-    }
-
-    static final class ButtonListener implements GpioPinListenerDigital {
-
-        private boolean clicked;
-
-        @Override
-        public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
-            System.out.println(" --> BUTTON PIN STATE: " + event.getPin() + " = " + event.getState());
-            clicked = event.getState() == PinState.HIGH;
-        }
-
-        public boolean isClicked() {
-            return clicked;
         }
     }
 }
