@@ -3,7 +3,7 @@ package com.nzsoft.rpi;
 public final class MockMinionImpl implements Minion {
 
     @Override
-    public void changeLED(LEDState state) {
+    public void switchLed(LedState state) {
         System.out.println("LED is " + state.name());
     }
 

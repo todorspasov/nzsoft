@@ -5,8 +5,8 @@ import com.nzsoft.rpi.Minion;
 import com.nzsoft.tasks.MockTaskOperationsImpl;
 import com.nzsoft.tasks.TaskOperations;
 
-import static com.nzsoft.rpi.Minion.LEDState.OFF;
-import static com.nzsoft.rpi.Minion.LEDState.ON;
+import static com.nzsoft.rpi.Minion.LedState.OFF;
+import static com.nzsoft.rpi.Minion.LedState.ON;
 import static java.lang.Thread.sleep;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
@@ -21,7 +21,7 @@ public final class Launcher {
             String taskName = taskOperations.getTask();
             if (isNotBlank(taskName)) {
                 //turn on the LED
-                minion.changeLED(ON);
+                minion.switchLed(ON);
                 //wait for the button to be clicked
                 while (!minion.isButtonPressed()) {
                     //sleep 100ms then check again the button state
@@ -31,11 +31,11 @@ public final class Launcher {
                 //mark the task as completed
                 taskOperations.markTaskCompleted(taskName);
                 //turn off the LED
-                minion.changeLED(OFF);
+                minion.switchLed(OFF);
                 //sleep
                 sleep(1000);
             } else {
-                System.out.println("No tasks available. Sleeping for 1sec");
+                System.out.println("No tasks available. Waiting...");
                 sleep(1000);
             }
         }

@@ -8,17 +8,17 @@ public interface Minion {
 	/**
 	 * Contains the possible states of a LED
 	 */
-	enum LEDState {
+	enum LedState {
 		ON, OFF
 	}
 
 	/**
-	 * Changes the LED light of the RPI
+	 * Switches the minion's LED light
 	 * 
 	 * @param state
-	 *            the {@link LEDState} to change to
+	 *            the {@link LedState} to change to
 	 */
-	void changeLED(LEDState state);
+	void switchLed(LedState state);
 
 	/**
 	 * @return whether the button has been pressed

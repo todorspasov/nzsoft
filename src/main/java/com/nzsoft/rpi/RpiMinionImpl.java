@@ -9,19 +9,18 @@ public final class RpiMinionImpl implements Minion {
     private static final Pin LED_OUTPUT_PIN = RaspiPin.GPIO_25;
     private static final Pin BUTTON_INPUT_PIN = RaspiPin.GPIO_01;
 
-    private final GpioController gpio;
     private final GpioPinDigitalInput button;
     private final GpioPinDigitalOutput led;
 
     public RpiMinionImpl() {
-        gpio = GpioFactory.getInstance();
+        final GpioController gpio = GpioFactory.getInstance();
         button = gpio.provisionDigitalInputPin(BUTTON_INPUT_PIN, PinPullResistance.PULL_UP);
         led = gpio.provisionDigitalOutputPin(LED_OUTPUT_PIN, "MinionLED", PinState.LOW);
         led.setShutdownOptions(true, PinState.LOW);
     }
 
     @Override
-    public void changeLED(LEDState state) {
+    public void switchLed(LedState state) {
         switch (state) {
             case ON:
                 led.high();
