@@ -1,6 +1,7 @@
 package com.nzsoft;
 
 import com.nzsoft.rpi.MockMinionImpl;
+import com.nzsoft.morse.MorseCodes;
 import com.nzsoft.rpi.Minion;
 import com.nzsoft.tasks.MockTaskOperationsImpl;
 import com.nzsoft.tasks.TaskOperations;
@@ -25,9 +26,12 @@ public final class Launcher {
                 //wait for the button to be clicked
                 while (!minion.isButtonPressed()) {
                     //sleep 100ms then check again the button state
-                    System.out.println("Processing task...");
+                    System.out.println("Waiting to hit the button to accept task...");
                     sleep(100);
                 }
+                String taskBody = taskOperations.getTaskBody(taskName);
+                //encode the task body into morse and display it on the minion.
+                minion.emitMorseCode(MorseCodes.convertToMorse(taskBody));
                 //mark the task as completed
                 taskOperations.markTaskCompleted(taskName);
                 //turn off the LED

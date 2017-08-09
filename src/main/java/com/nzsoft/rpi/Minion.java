@@ -25,4 +25,8 @@ public interface Minion {
 	 */
 	boolean isButtonPressed();
 
+	/**
+	 * @param morseCode the morse code to emit, each array entry is a single letter
+	 */
+	void emitMorseCode(String[] morseCode);
 }

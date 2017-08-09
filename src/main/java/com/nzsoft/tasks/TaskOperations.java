@@ -30,6 +30,13 @@ public interface TaskOperations {
 
 	/**
 	 * @param taskName
+	 *            the name of the task
+	 * @return the body of the task
+	 */
+	String getTaskBody(String taskName);
+
+	/**
+	 * @param taskName
 	 *            the name of the task to complete
 	 */
 	void markTaskCompleted(String taskName);
