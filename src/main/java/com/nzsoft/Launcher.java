@@ -3,6 +3,7 @@ package com.nzsoft;
 import com.nzsoft.rpi.MockMinionImpl;
 import com.nzsoft.morse.MorseCodes;
 import com.nzsoft.rpi.Minion;
+import com.nzsoft.rpi.RpiMinionImpl;
 import com.nzsoft.tasks.MockTaskOperationsImpl;
 import com.nzsoft.tasks.TaskOperations;
 
@@ -14,8 +15,14 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
 public final class Launcher {
 
     public static void main(String[] args) throws Exception {
-        Minion minion = new MockMinionImpl();
-        TaskOperations taskOperations = new MockTaskOperationsImpl();
+        Minion minion = new RpiMinionImpl();
+
+        // TODO inject Google Drive implementation
+        TaskOperations taskOperations = null;
+
+        if ("test".equalsIgnoreCase(args[0])) {
+            taskOperations = new MockTaskOperationsImpl();
+        }
 
         while (true) {
             //if there is an existing task get it, otherwise sleep
