@@ -57,7 +57,7 @@ public class MorseCodes {
 		String[] output = new String[text.length()];
 		for (int i = 0; i < text.length(); i++) {
 			char currentChar = text.charAt(i);
-			output[i] = codes.get(String.valueOf(currentChar));
+			output[i] = codes.get(String.valueOf(currentChar).toLowerCase());
 		}
 		return output;
 	}

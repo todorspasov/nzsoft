@@ -15,29 +15,29 @@ public interface TaskOperations {
 	/**
 	 * Gets a task from the google drive folder.
 	 * 
-	 * @return the name of the task, if such exists in the drive folder
+	 * @return the Id of the task, if such exists in the drive folder
 	 */
 	String getTask();
 
 	/**
 	 * Gets the {@link Priority} of a task
 	 * 
-	 * @param taskName
-	 *            the name of the task
+	 * @param taskId
+	 *            the Id of the task
 	 * @return the {@link Priority} of the task
 	 */
-	Priority getTaskPriority(String taskName);
+	Priority getTaskPriority(String taskId);
 
 	/**
-	 * @param taskName
-	 *            the name of the task
+	 * @param taskId
+	 *            the Id of the task
 	 * @return the body of the task
 	 */
-	String getTaskBody(String taskName);
+	String getTaskBody(String taskId);
 
 	/**
-	 * @param taskName
-	 *            the name of the task to complete
+	 * @param taskId
+	 *            the Id of the task to complete
 	 */
-	void markTaskCompleted(String taskName);
+	void markTaskCompleted(String taskId);
 }

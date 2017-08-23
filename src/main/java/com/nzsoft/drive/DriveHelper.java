@@ -45,7 +45,7 @@ public class DriveHelper {
      * at ~/.credentials/drive-java-quickstart
      */
     private static final List<String> SCOPES =
-        Arrays.asList(DriveScopes.DRIVE_METADATA_READONLY);
+        Arrays.asList(DriveScopes.DRIVE);
 
     static {
         try {
