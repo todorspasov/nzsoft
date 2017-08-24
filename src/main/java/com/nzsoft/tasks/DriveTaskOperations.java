@@ -1,9 +1,7 @@
 package com.nzsoft.tasks;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.File;
@@ -50,14 +48,16 @@ public class DriveTaskOperations implements TaskOperations {
 
 	@Override
 	public String getTaskBody(String taskId) {
+		String taskBody = null;
 		try {
-			OutputStream outputStream = new FileOutputStream("output.txt");
+			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 			service.files().get(taskId).executeMediaAndDownloadTo(outputStream);
+			taskBody = outputStream.toString();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "sos SoS";
+		return taskBody;
 	}
 
 	@Override
