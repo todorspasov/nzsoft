@@ -50,6 +50,11 @@ public final class Launcher {
                     minion.emitMorseCode(MorseCodes.convertToMorse(taskBody));
                     sleep(10000);
                 }
+                while (!minion.isButtonPressed()) {
+                    //sleep 100ms then check again the button state
+                    System.out.println("Waiting to hit the button to complete task...");
+                    sleep(100);
+                }
                 //mark the task as completed
                 taskOperations.markTaskCompleted(taskName);
                 //turn off the LED
