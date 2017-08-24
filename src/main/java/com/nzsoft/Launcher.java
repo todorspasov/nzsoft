@@ -15,7 +15,9 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 public final class Launcher {
 
-    public static void main(String[] args) throws Exception {
+    private static final int MORSE_CODE_EMIT_RETRIES = 1;
+
+	public static void main(String[] args) throws Exception {
         TaskOperations taskOperations = null;
         Minion minion = null;
 
@@ -43,8 +45,11 @@ public final class Launcher {
                     sleep(100);
                 }
                 String taskBody = taskOperations.getTaskBody(taskName);
-                //encode the task body into morse and display it on the minion.
-                minion.emitMorseCode(MorseCodes.convertToMorse(taskBody));
+                for (int i = 0; i < MORSE_CODE_EMIT_RETRIES; i++) {
+                    //encode the task body into morse and display it on the minion.
+                    minion.emitMorseCode(MorseCodes.convertToMorse(taskBody));
+                    sleep(10000);
+                }
                 //mark the task as completed
                 taskOperations.markTaskCompleted(taskName);
                 //turn off the LED

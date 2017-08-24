@@ -11,6 +11,7 @@ import com.nzsoft.drive.DriveHelper;
 public class DriveTaskOperations implements TaskOperations {
 	private static final String MINION_FOLDER_NAME = "MinionTasks";
 	private static final String MINION_DATA_FILE_NAME = "Data.txt";
+	private static final String COMPLETED_FILE_PREFIX = "[COMPLETED]";
 
 	private final Drive service;
 
@@ -54,7 +55,6 @@ public class DriveTaskOperations implements TaskOperations {
 			service.files().get(taskId).executeMediaAndDownloadTo(outputStream);
 			taskBody = outputStream.toString();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return taskBody;
@@ -62,8 +62,14 @@ public class DriveTaskOperations implements TaskOperations {
 
 	@Override
 	public void markTaskCompleted(String taskId) {
-		// TODO Auto-generated method stub
-
+		try {
+			File taskFile = service.files().get(taskId).execute();
+			File renamedFile = new File();
+			renamedFile.setName(COMPLETED_FILE_PREFIX + taskFile.getName());
+			service.files().update(taskId, renamedFile).execute();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
