@@ -30,7 +30,7 @@ public class DriveTaskOperations implements TaskOperations {
 			String minionFolderId = folder.getId();
 			System.out.println("minion folder Id = " + minionFolderId);
 			FileList result = service.files().list()
-					.setQ("name contains '" + MINION_DATA_FILE_NAME + "' and '" + minionFolderId + "' in parents")
+					.setQ("name = '" + MINION_DATA_FILE_NAME + "' and '" + minionFolderId + "' in parents")
 					.setSpaces("drive").execute();
 			for (File file : result.getFiles()) {
 				System.out.printf("Found file: %s (%s)\n", file.getName(), file.getId());
