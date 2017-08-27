@@ -24,12 +24,12 @@ import com.nzsoft.tasks.TaskOperations;
  * Ne e nujno da napravite vsichki EASY zadachi za da preminete na MEDIUM zadachite. Ne e nujno da napravite vsichki MEDIUM zadachi za da preminete na hard zadachite.
  * 
  * Ima obshto:
- * 9 EASY zadachi -> max 900 tochki.
- * 5 MEDIUM zadachi -> max 1250 tochki
- * 4 HARD zadachi -> max 500+600+700+800=2600 tochki
+ * 9 EASY zadachi -> max 9x100=900 tochki.
+ * 5 MEDIUM zadachi -> max 5x250=1250 tochki
+ * 5 HARD zadachi -> max 500+600+700+800+900=3500 tochki
  *
  * Maksimalen vazmojen rezultat:
- * 9x100 + 5x250 + (500+600+700+800) = 4750 tochki.
+ * resheni vsichki zadachi: 9x100 + 5x250 + (500+600+700+800+900) = 5650 tochki.
  * 
  */
 public final class Launcher {
@@ -72,19 +72,19 @@ public final class Launcher {
 		} else {
 			minion = new RpiMinionImpl();
 		}
-		// MEDIUM 3) Pusnete programata vav testov rejim (bez vrazka kam
-		// minion). Poiskaite pomosht ot Asistentite.
+		// MEDIUM 3) Pusnete programata vav testov softueren rejim rejim (bez vrazka kam
+		// minion).
 
-		// HARD 1) Napishete imeto na vashiq otbor kato morzov kod prez
+		// HARD 1) Napravete taka che kogato se startira miniona da e vav dvoen testov rejim (bez vrazka kam miniona i bez vrazka kam google drive). Podskazka smenete kliuchovite String konstanti za sravnqvane na edna i sashta vav dvata if bloka po-gore.
+		
+		// HARD 2) Napishete imeto na vashiq otbor kato morzov kod prez
 		// lampichkata na miniona.
 		// Podskazki: vijte nadolu reda sadarjasht emitMorseCode(...)
 
-		// HARD 2) Sled kato se emitira imeto na otbora, izvikaite metoda za
+		// HARD 3) Sled kato se emitira imeto na otbora, izvikaite metoda za
 		// chakane na natiskane na butona.
 
-		// HARD 3) Polzvaite FOR operator za da napravete imeto na otbora da se
-		// emitira 4 pati sas pauza (sleep()) mejdu vsqko emitirane ot 5
-		// sekundi.
+		// HARD 4) Polzvaite FOR operator za da predadete kato morzov kod na lampichkata na miniona, imeto na otbora 4 pati sas pauza ot 5 sekundi (sleep()) mejdu vsqko predavane na imeto na otbora.
 
 		while (true) {
 			// EASY 6) Dobavete saobshtenie na konzolata predi izvikvaneto za
@@ -100,7 +100,7 @@ public final class Launcher {
 	private static void getRadioSignal(TaskOperations taskOperations, Minion minion) throws Exception {
 		String taskName = taskOperations.getTask();
 		if (isNotBlank(taskName)) {
-			// HARD 4) Napravete miniona vmesto da darji lampichkata pusnata
+			// HARD 5) Napravete miniona vmesto da darji lampichkata pusnata
 			// postoqnno, da miga na interval ot 75 milisekundi pri poluchavane
 			// na nov kod (sledvashtiq red)
 			minion.switchLed(ON);
