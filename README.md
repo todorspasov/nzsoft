@@ -13,3 +13,5 @@ sudo rpi-update 52241088c1da59a359110d39c1875cda56496764
 6) Изберете стрелкичката за сваляне (Download JSON) на края на реда на WarMinion -> Запазете файла на работния плот.
 7) Копирайте файла от работния плот. Във Eclipse, изберете папката src/main/resources и натиснете Ctrl+V.
 8) Изберете файла client_secret_.....json -> десен бутон -> Refactor -> Rename. Задайте ново име client_secret.json и натиснете ОК.
+
+9) Влезте в https://console.developers.google.com/apis/dashboard натиснете бутона "Enable APIS and Services" напишете във сърч полето drive и изберете от листа по-долу Google Drive API.
