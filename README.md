@@ -15,3 +15,5 @@ sudo rpi-update 52241088c1da59a359110d39c1875cda56496764
 8) Изберете файла client_secret_.....json -> десен бутон -> Refactor -> Rename. Задайте ново име client_secret.json и натиснете ОК.
 
 9) Влезте в https://console.developers.google.com/apis/dashboard натиснете бутона "Enable APIS and Services" напишете във сърч полето drive и изберете от листа по-долу Google Drive API.
+
+bojidare shto sa vyrna?!?
