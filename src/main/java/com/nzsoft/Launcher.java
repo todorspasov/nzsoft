@@ -7,8 +7,10 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 import com.nzsoft.morse.MorseCodes;
 import com.nzsoft.rpi.Minion;
+import com.nzsoft.rpi.MockMinionImpl;
 import com.nzsoft.rpi.RpiMinionImpl;
 import com.nzsoft.tasks.DriveTaskOperations;
+import com.nzsoft.tasks.MockTaskOperationsImpl;
 import com.nzsoft.tasks.TaskOperations;
 
 /**
@@ -50,28 +52,17 @@ public final class Launcher {
 		// EASY 3) Izpishete na konzolata imeto na vashiq otbor.
 		System.out.println("War Minion, version 2017, NZsoft, all rights reserved®");
 
-		if ("test".equalsIgnoreCase(args[0])) {
-			// EASY 4) Promenete saobshtenieto da kazva che nqmame vrazka kam
-			// google drive, rabotim vav hardueren testov rejim
-			// System.out....?
-
-			// MEDIUM 1) Popravete testoviq rejim na google drive interfeisa.
-			// Pomosht: izvikaite konstruktora ot tip MockTaskOperationsImpl
-			taskOperations = null;/// ???;//Mock task minions impl interface
+		if ("rpitest".equalsIgnoreCase(args[0])) {
+			minion = new RpiMinionImpl();
+			taskOperations = new MockTaskOperationsImpl();/// ???;//Mock task minions impl interface
+		} else if ("localtest".equalsIgnoreCase(args[0])) {
+			taskOperations = new MockTaskOperationsImpl();/// ???;//Mock task minions impl interface
+			minion = new MockMinionImpl();
 		} else {
 			taskOperations = new DriveTaskOperations();
-		}
-		if ("testdrive".equalsIgnoreCase(args[0])) {
-			// EASY 5) Dobavete saobshtenie da kazva che nqmame vrazka kam RPI
-			// Miniona, rabotim vav softueren testov rejim
-			// System.????
-
-			// MEDIUM 2) Popravete testoviq rejim na RPI Miniona. Pomosht:
-			// izvikaite konstruktora ot tip MockMinionImpl.
-			minion = null;// ???;//Mock minion impl
-		} else {
 			minion = new RpiMinionImpl();
 		}
+		
 		// MEDIUM 3) Pusnete programata vav testov softueren rejim rejim (bez vrazka kam
 		// minion).
 
