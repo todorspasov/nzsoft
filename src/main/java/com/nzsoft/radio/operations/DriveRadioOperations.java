@@ -1,4 +1,4 @@
-package com.nzsoft.tasks;
+package com.nzsoft.radio.operations;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -8,20 +8,20 @@ import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.FileList;
 import com.nzsoft.drive.DriveHelper;
 
-public class DriveTaskOperations implements TaskOperations {
+public class DriveRadioOperations implements RadioOperations {
 	private static final String MINION_FOLDER_NAME = "MinionTasks";
 	private static final String MINION_DATA_FILE_NAME = "Data.txt";
 	private static final String COMPLETED_FILE_PREFIX = "[COMPLETED]";
 
 	private final Drive service;
 
-	public DriveTaskOperations() throws IOException {
+	public DriveRadioOperations() throws IOException {
 		service = DriveHelper.getDriveService();
 	}
 
 	@Override
-	public String getTask() {
-		String taskId = null;
+	public String getSignal() {
+		String signalId = null;
 		try {
 			FileList folderResult = service.files().list()
 					.setQ("name = '" + MINION_FOLDER_NAME + "' and mimeType = 'application/vnd.google-apps.folder'")
@@ -34,39 +34,39 @@ public class DriveTaskOperations implements TaskOperations {
 					.setSpaces("drive").execute();
 			for (File file : result.getFiles()) {
 				System.out.printf("Found file: %s (%s)\n", file.getName(), file.getId());
-				taskId = file.getId();
+				signalId = file.getId();
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return taskId;
+		return signalId;
 	}
 
 	@Override
-	public Priority getTaskPriority(String taskId) {
+	public Priority getSignalPriority(String signalId) {
 		return null;
 	}
 
 	@Override
-	public String getTaskBody(String taskId) {
-		String taskBody = null;
+	public String getSignalBody(String signalId) {
+		String signalBody = null;
 		try {
 			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-			service.files().get(taskId).executeMediaAndDownloadTo(outputStream);
-			taskBody = outputStream.toString();
+			service.files().get(signalId).executeMediaAndDownloadTo(outputStream);
+			signalBody = outputStream.toString();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return taskBody;
+		return signalBody;
 	}
 
 	@Override
-	public void markTaskCompleted(String taskId) {
+	public void markSignalReceived(String signalId) {
 		try {
-			File taskFile = service.files().get(taskId).execute();
+			File signalsFile = service.files().get(signalId).execute();
 			File renamedFile = new File();
-			renamedFile.setName(COMPLETED_FILE_PREFIX + taskFile.getName());
-			service.files().update(taskId, renamedFile).execute();
+			renamedFile.setName(COMPLETED_FILE_PREFIX + signalsFile.getName());
+			service.files().update(signalId, renamedFile).execute();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -6,12 +6,12 @@ import static java.lang.Thread.sleep;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 import com.nzsoft.morse.MorseCodes;
+import com.nzsoft.radio.operations.DriveRadioOperations;
+import com.nzsoft.radio.operations.MockRadioOperationsImpl;
+import com.nzsoft.radio.operations.RadioOperations;
 import com.nzsoft.rpi.Minion;
 import com.nzsoft.rpi.MockMinionImpl;
 import com.nzsoft.rpi.RpiMinionImpl;
-import com.nzsoft.tasks.DriveTaskOperations;
-import com.nzsoft.tasks.MockTaskOperationsImpl;
-import com.nzsoft.tasks.TaskOperations;
 
 /**
  * Forma za ocenqvane ot asistentite:
@@ -46,7 +46,7 @@ public final class Launcher {
 	private static final long MORSE_CODE_DELAY_BETWEEN_RETRIES_MILLISECONDS = 10000;
 
 	public static void main(String[] args) throws Exception {
-		TaskOperations taskOperations = null;
+		RadioOperations taskOperations = null;
 		Minion minion = null;
 
 		// EASY 3) Izpishete na konzolata imeto na vashiq otbor.
@@ -54,12 +54,12 @@ public final class Launcher {
 
 		if ("rpitest".equalsIgnoreCase(args[0])) {
 			minion = new RpiMinionImpl();
-			taskOperations = new MockTaskOperationsImpl();/// ???;//Mock task minions impl interface
+			taskOperations = new MockRadioOperationsImpl();/// ???;//Mock task minions impl interface
 		} else if ("localtest".equalsIgnoreCase(args[0])) {
-			taskOperations = new MockTaskOperationsImpl();/// ???;//Mock task minions impl interface
+			taskOperations = new MockRadioOperationsImpl();/// ???;//Mock task minions impl interface
 			minion = new MockMinionImpl();
 		} else {
-			taskOperations = new DriveTaskOperations();
+			taskOperations = new DriveRadioOperations();
 			minion = new RpiMinionImpl();
 		}
 		
@@ -88,8 +88,8 @@ public final class Launcher {
 		}
 	}
 
-	private static void getRadioSignal(TaskOperations taskOperations, Minion minion) throws Exception {
-		String taskName = taskOperations.getTask();
+	private static void getRadioSignal(RadioOperations taskOperations, Minion minion) throws Exception {
+		String taskName = taskOperations.getSignal();
 		if (isNotBlank(taskName)) {
 			// HARD 5) Napravete miniona vmesto da darji lampichkata pusnata
 			// postoqnno, da miga na interval ot 75 milisekundi pri poluchavane
@@ -105,7 +105,7 @@ public final class Launcher {
 			//MEDIUM 4) Dobavete edin red za da nakarate miniona da izchaka 5 sekundi predi da e pochnal da predava morzoviq kod
 			//podskazka - izpolzvaite metoda sleep
 			
-			String taskBody = taskOperations.getTaskBody(taskName);
+			String taskBody = taskOperations.getSignalBody(taskName);
 			for (int i = 0; i < MORSE_CODE_EMIT_RETRIES; i++) {
 				minion.emitMorseCode(MorseCodes.convertToMorse(taskBody));
 				sleep(MORSE_CODE_DELAY_BETWEEN_RETRIES_MILLISECONDS);
@@ -116,7 +116,7 @@ public final class Launcher {
 			
 			waitForButtonPress(minion);
 
-			taskOperations.markTaskCompleted(taskName);
+			taskOperations.markSignalReceived(taskName);
 			
 			minion.switchLed(OFF);
 
