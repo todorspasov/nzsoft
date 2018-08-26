@@ -2,6 +2,6 @@
 .project
 output.txt
 .settings/
-.gradle/wrapper/*.jar
+.gradle/
 bin/
 build/
