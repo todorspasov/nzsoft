@@ -43,7 +43,7 @@ public final class Launcher {
 	// EASY 2) Napravete zabavqneto mejdu pre-povtarqneto na morzoviq kod da
 	// stane deset sekundi. Stoinostta koqto vavejdate trqbva da e vav
 	// milisekundi
-	private static final long MORSE_CODE_DELAY_BETWEEN_RETRIES_MILLISECONDS = 10000;
+	private static final long MORSE_CODE_DELAY_BETWEEN_RETRIES_MILLISECONDS = 5000;
 
 	public static void main(String[] args) throws Exception {
 		RadioOperations taskOperations = null;
@@ -56,7 +56,7 @@ public final class Launcher {
 			minion = new RpiMinionImpl();
 			taskOperations = new MockRadioOperationsImpl();/// ???;//Mock task minions impl interface
 		} else if ("localtest".equalsIgnoreCase(args[0])) {
-			taskOperations = new MockRadioOperationsImpl();/// ???;//Mock task minions impl interface
+			taskOperations = new DriveRadioOperations();/// ???;//Mock task minions impl interface
 			minion = new MockMinionImpl();
 		} else {
 			taskOperations = new DriveRadioOperations();
