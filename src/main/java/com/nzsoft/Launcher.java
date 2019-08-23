@@ -10,6 +10,7 @@ import com.nzsoft.radio.operations.DriveRadioOperations;
 import com.nzsoft.radio.operations.MockRadioOperationsImpl;
 import com.nzsoft.radio.operations.RadioOperations;
 import com.nzsoft.rpi.Minion;
+import com.nzsoft.rpi.MinionFactory;
 import com.nzsoft.rpi.MockMinionImpl;
 import com.nzsoft.rpi.RpiMinionImpl;
 
@@ -50,19 +51,18 @@ public final class Launcher {
 		Minion minion = null;
 
 		// EASY 3) Izpishete na konzolata imeto na vashiq otbor.
-		System.out.println("War Minion, version 2017, NZsoft, all rights reserved®");
+		System.out.println("War Minion, version 2019, NZsoft, all rights reserved");
 
 		if ("rpitest".equalsIgnoreCase(args[0])) {
-			minion = new RpiMinionImpl();
 			taskOperations = new MockRadioOperationsImpl();/// ???;//Mock task minions impl interface
 		} else if ("localtest".equalsIgnoreCase(args[0])) {
-			taskOperations = new DriveRadioOperations();/// ???;//Mock task minions impl interface
-			minion = new MockMinionImpl();
+			taskOperations = new MockRadioOperationsImpl();/// ???;//Mock task minions impl interface
 		} else {
 			taskOperations = new DriveRadioOperations();
-			minion = new RpiMinionImpl();
 		}
 		
+		minion = MinionFactory.getMinion(args);
+
 		// MEDIUM 3) Pusnete programata vav testov softueren rejim rejim (bez vrazka kam
 		// minion).
 
