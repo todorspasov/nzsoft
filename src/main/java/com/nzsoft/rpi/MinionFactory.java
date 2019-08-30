@@ -10,6 +10,9 @@ public class MinionFactory {
 
 		Minion newMinion = null;
 
+		if (args.length == 0) {
+			return new MockMinionImpl();
+		}
 		switch (args[0]) {
 
 		case "localtest":
