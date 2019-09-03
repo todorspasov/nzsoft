@@ -15,8 +15,7 @@ public interface Minion {
 	/**
 	 * Switches the minion's LED light
 	 * 
-	 * @param state
-	 *            the {@link LedState} to change to
+	 * @param state the {@link LedState} to change to
 	 */
 	void switchLed(LedState state);
 
@@ -27,6 +26,7 @@ public interface Minion {
 
 	/**
 	 * @param morseCode the morse code to emit, each array entry is a single letter
+	 * @throws InterruptedException
 	 */
-	void emitMorseCode(String[] morseCode);
+	void emitMorseCode(String[] morseCode) throws InterruptedException;
 }

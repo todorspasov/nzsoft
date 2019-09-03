@@ -15,17 +15,22 @@ import com.nzsoft.radio.signal.RadioSignal;
 
 public class GCPRadioOperations implements RadioOperations {
 
-	private final static String DEFAULT_SIGNAL_URL = "http://127.0.0.1:8080/v1/data?filter=random-word";
+	private static final String GCP_DATA_URL = "http://%s:8080/v1/data";
+	private String url;
 
-	public GCPRadioOperations() throws IOException {
+	public GCPRadioOperations() {
+		this.url = String.format(GCP_DATA_URL, "127.0.0.1");
+	}
 
+	public GCPRadioOperations(String address) {
+		this.url = String.format(GCP_DATA_URL, address);
 	}
 
 	@Override
 	public RadioSignal getSignal() {
 
 		HttpClient client = HttpClientBuilder.create().build();
-		HttpGet request = new HttpGet(DEFAULT_SIGNAL_URL);
+		HttpGet request = new HttpGet(url);
 
 		try {
 			HttpResponse response = client.execute(request);

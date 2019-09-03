@@ -47,21 +47,24 @@ public final class Launcher {
 
 	public static void main(String[] args) throws Exception {
 		RadioOperations taskOperations = null;
-		Minion minion = null;
+
+		Minion minion = MinionFactory.getMinion(args);
 
 		// EASY 3) Izpishete na konzolata imeto na vashiq otbor.
 		System.out.println("War Minion, version 2019, NZsoft, all rights reserved");
-		if (args.length == 0) {
-			taskOperations = new GCPRadioOperations();
-		} else if ("rpitest".equalsIgnoreCase(args[0])) {
-			taskOperations = new MockRadioOperationsImpl();/// ???;//Mock task minions impl interface
+		if ("rpitest".equalsIgnoreCase(args[0])) {
+			if (args.length < 2) {
+				taskOperations = new GCPRadioOperations(args[1]);
+			} else {
+				taskOperations = new GCPRadioOperations();/// ???;//Mock task minions impl interface
+			}
 		} else if ("localtest".equalsIgnoreCase(args[0])) {
-			taskOperations = new MockRadioOperationsImpl();/// ???;//Mock task minions impl interface
-		} else {
-			taskOperations = new GCPRadioOperations();
+			if (args.length == 2) {
+				taskOperations = new GCPRadioOperations(args[1]);
+			} else {
+				taskOperations = new MockRadioOperationsImpl();/// ???;//Mock task minions impl interface
+			}
 		}
-
-		minion = MinionFactory.getMinion(args);
 
 		// MEDIUM 3) Pusnete programata vav testov softueren rejim rejim (bez vrazka kam
 		// minion).

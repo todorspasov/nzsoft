@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+
 public class MinionFactory {
 
 	public static Minion getMinion(String[] args) {
@@ -11,36 +13,67 @@ public class MinionFactory {
 		Minion newMinion = null;
 
 		if (args.length == 0) {
-			return new MockMinionImpl();
+			unsupportedModeExit();
 		}
+
 		switch (args[0]) {
 
 		case "localtest":
-			if (args.length > 1 && "bhv".equals(args[1])) {
-				BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-				String pwd = null;
-				System.out.println("Password:");
-				try {
-					pwd = reader.readLine();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				if ("hacktheworld".equals(pwd)) {
-					newMinion = new BlackHatMinionImpl();
-				} else {
+			if (args.length < 3) {
+				newMinion = new MockMinionImpl();
+			} else if (args.length == 3 && "bhm".equals(args[2])) {
+				if (!checkPassword()) {
 					throw new IllegalStateException("Unauthorized");
+				} else {
+					newMinion = new BlackHatMinionLocalImpl(args[1]);
 				}
 			} else {
-				newMinion = new MockMinionImpl();
+				unsupportedModeExit();
 			}
 			break;
 		case "rpitest":
-			newMinion = new RpiMinionImpl();
+			if (args.length < 3) {
+				newMinion = new RpiMinionImpl();
+			}
+			if (args.length == 3 && "bhm".equals(args[2])) {
+				if (!checkPassword()) {
+					throw new IllegalStateException("Unauthorized");
+				} else {
+					newMinion = new BlackHatMinionRpiImpl(args[1]);
+				}
+			} else {
+				unsupportedModeExit();
+			}
 			break;
 		default:
 			newMinion = new RpiMinionImpl();
 			break;
 		}
 		return newMinion;
+
+	}
+
+	private static void unsupportedModeExit() {
+		System.out.println("\nMissing input arguments. Supported modes:\n");
+		System.out.println("    - localtest : Mock minion and GCP");
+		System.out.println("    - rpitest   : Mock GCP");
+		System.out.println();
+		System.out.println("    - localtest <url>  : Mock minion, GCP on provided url");
+		System.out.println("    - rpitest   <url>  : Real minion, GCP on provided url");
+		System.exit(1);
+	}
+
+	private static boolean checkPassword() {
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		String pwd = null;
+		System.out.println("Password:");
+		try {
+			pwd = reader.readLine();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		String encodedPassword = Base64.encode(pwd.getBytes()).toString();
+		return "aGFja3RoZXdvcmxk".equals(encodedPassword);
+
 	}
 }
