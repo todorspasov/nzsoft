@@ -3,8 +3,8 @@ package com.nzsoft.rpi;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Base64;
 
-import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 
 public class MinionFactory {
 
@@ -72,7 +72,7 @@ public class MinionFactory {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		String encodedPassword = Base64.encode(pwd.getBytes()).toString();
+		String encodedPassword = Base64.getEncoder().encodeToString(pwd.getBytes());
 		return "aGFja3RoZXdvcmxk".equals(encodedPassword);
 
 	}
