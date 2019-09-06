@@ -3,6 +3,7 @@ package com.nzsoft.rpi;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.Base64;
 
 
@@ -11,7 +12,6 @@ public class MinionFactory {
 	public static Minion getMinion(String[] args) {
 
 		Minion newMinion = null;
-
 		if (args.length == 0) {
 			unsupportedModeExit();
 		}
@@ -32,10 +32,10 @@ public class MinionFactory {
 			}
 			break;
 		case "rpitest":
+			System.out.println("No naistina ne sam args.lenght = " + args.length);
 			if (args.length < 3) {
 				newMinion = new RpiMinionImpl();
-			}
-			if (args.length == 3 && "bhm".equals(args[2])) {
+			} else if (args.length == 3 && "bhm".equals(args[2])) {
 				if (!checkPassword()) {
 					throw new IllegalStateException("Unauthorized");
 				} else {

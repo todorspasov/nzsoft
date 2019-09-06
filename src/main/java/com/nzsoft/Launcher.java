@@ -53,7 +53,7 @@ public final class Launcher {
 		// EASY 3) Izpishete na konzolata imeto na vashiq otbor.
 		System.out.println("War Minion, version 2019, NZsoft, all rights reserved");
 		if ("rpitest".equalsIgnoreCase(args[0])) {
-			if (args.length < 2) {
+			if (args.length >= 2) {
 				taskOperations = new GCPRadioOperations(args[1]);
 			} else {
 				taskOperations = new GCPRadioOperations();/// ???;//Mock task minions impl interface
